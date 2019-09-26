@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"ztaylor.me/charset"
 	"ztaylor.me/keygen"
 )
 
@@ -20,7 +21,7 @@ func TestRandomnessContainsFirstChar(t *testing.T) {
 	rand := NewRand()
 	var ok bool
 	for i := 0; i < 7; i++ {
-		key := keygen.New(64, keygen.CharSetNumeric, rand)
+		key := keygen.New(64, charset.Numeric, rand)
 		if strings.Contains(key, "0") {
 			ok = true
 		}
@@ -33,7 +34,7 @@ func TestRandomnessContainsLastChar(t *testing.T) {
 	rand := NewRand()
 	var ok bool
 	for i := 0; i < 7; i++ {
-		key := keygen.New(64, keygen.CharSetAlphaNumericCapital, rand)
+		key := keygen.New(64, charset.Capital, rand)
 		if strings.Contains(key, "Z") {
 			ok = true
 		}
