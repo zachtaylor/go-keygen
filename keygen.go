@@ -2,10 +2,9 @@ package keygen // import "ztaylor.me/keygen"
 
 import (
 	"math/rand"
-	"time"
-	"unsafe"
 
-	pkg_charset "ztaylor.me/charset"
+	"ztaylor.me/cast"
+	pkg_charset "ztaylor.me/cast/charset"
 )
 
 // Keygener is an interface type that generates random strings
@@ -19,8 +18,38 @@ func New(size int, charset string, rand *rand.Rand) string {
 	for i, clen := 0, len(charset); i < size; i++ {
 		key[i] = charset[int(rand.Int31n(int32(clen)))]
 	}
-	// unsafe trick from strings.Builder.String()
-	return *(*string)(unsafe.Pointer(&key))
+	return cast.StringBytes(key)
+}
+
+// NewAlpha uses New with charset.Alpha and DefaultSettings.Rand
+func NewAlpha(size int) string {
+	return New(size, pkg_charset.Alpha, DefaultSettings.Rand)
+}
+
+// NewAlphaCapital uses New with charset.AlphaCapital and DefaultSettings.Rand
+func NewAlphaCapital(size int) string {
+	return New(size, pkg_charset.AlphaCapital, DefaultSettings.Rand)
+}
+
+// NewAlphaCapitalNumeric uses New with charset.AlphaCapitalNumeric and DefaultSettings.Rand
+func NewAlphaCapitalNumeric(size int) string {
+	return New(size, pkg_charset.AlphaCapitalNumeric, DefaultSettings.Rand)
+}
+
+// NewCapital uses New with charset.Capital and DefaultSettings.Rand
+func NewCapital(size int) string {
+	return New(size, pkg_charset.Capital, DefaultSettings.Rand)
+}
+
+// NewCapitalNumeric uses New with charset.CapitalNumeric and DefaultSettings.Rand
+func NewCapitalNumeric(size int) string {
+	return New(size, pkg_charset.CapitalNumeric, DefaultSettings.Rand)
+}
+
+// NewNumeric uses New with charset.Numeric and DefaultSettings.Rand
+func NewNumeric(size int) string {
+	return New(size, pkg_charset.Numeric, DefaultSettings.Rand)
+
 }
 
 // Settings provides random string generation settings
@@ -40,8 +69,8 @@ func (settings *Settings) Keygen() string {
 // DefaultSettings provides global var for basic functionality
 var DefaultSettings = &Settings{
 	KeySize: 7,
-	CharSet: pkg_charset.AlphaNumericCapital,
-	Rand:    rand.New(rand.NewSource(time.Now().UnixNano())),
+	CharSet: pkg_charset.AlphaCapitalNumeric,
+	Rand:    rand.New(rand.NewSource(cast.Now().UnixNano())),
 }
 
 // NewVal creates a key using DefaultSettings
