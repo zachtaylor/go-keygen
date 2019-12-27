@@ -29,6 +29,7 @@ func TestRandomnessContainsFirstChar(t *testing.T) {
 		t.Fail()
 	}
 }
+
 func TestRandomnessContainsLastChar(t *testing.T) {
 	rand := NewRand()
 	var ok bool
