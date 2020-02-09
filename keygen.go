@@ -4,7 +4,7 @@ import (
 	"math/rand"
 
 	"ztaylor.me/cast"
-	pkg_charset "ztaylor.me/cast/charset"
+	"ztaylor.me/cast/charset"
 )
 
 // Keygener is an interface type that generates random strings
@@ -23,38 +23,40 @@ func New(size int, charset string, rand *rand.Rand) string {
 
 // NewAlpha uses New with charset.Alpha and DefaultSettings.Rand
 func NewAlpha(size int) string {
-	return New(size, pkg_charset.Alpha, DefaultSettings.Rand)
+	return New(size, charset.Alpha, DefaultSettings.Rand)
 }
 
 // NewAlphaCapital uses New with charset.AlphaCapital and DefaultSettings.Rand
 func NewAlphaCapital(size int) string {
-	return New(size, pkg_charset.AlphaCapital, DefaultSettings.Rand)
+	return New(size, charset.AlphaCapital, DefaultSettings.Rand)
 }
 
 // NewAlphaCapitalNumeric uses New with charset.AlphaCapitalNumeric and DefaultSettings.Rand
 func NewAlphaCapitalNumeric(size int) string {
-	return New(size, pkg_charset.AlphaCapitalNumeric, DefaultSettings.Rand)
+	return New(size, charset.AlphaCapitalNumeric, DefaultSettings.Rand)
 }
 
 // NewCapital uses New with charset.Capital and DefaultSettings.Rand
 func NewCapital(size int) string {
-	return New(size, pkg_charset.Capital, DefaultSettings.Rand)
+	return New(size, charset.Capital, DefaultSettings.Rand)
 }
 
 // NewCapitalNumeric uses New with charset.CapitalNumeric and DefaultSettings.Rand
 func NewCapitalNumeric(size int) string {
-	return New(size, pkg_charset.CapitalNumeric, DefaultSettings.Rand)
+	return New(size, charset.CapitalNumeric, DefaultSettings.Rand)
 }
 
 // NewNumeric uses New with charset.Numeric and DefaultSettings.Rand
 func NewNumeric(size int) string {
-	return New(size, pkg_charset.Numeric, DefaultSettings.Rand)
-
+	return New(size, charset.Numeric, DefaultSettings.Rand)
 }
 
-// Settings provides random string generation settings
-//
-// implements Kengener
+// NewVal creates a key using DefaultSettings
+func NewVal() string {
+	return DefaultSettings.Keygen()
+}
+
+// Settings provides random string generation settings, and implements Keygener
 type Settings struct {
 	KeySize int
 	CharSet string
@@ -69,11 +71,6 @@ func (settings *Settings) Keygen() string {
 // DefaultSettings provides global var for basic functionality
 var DefaultSettings = &Settings{
 	KeySize: 7,
-	CharSet: pkg_charset.AlphaCapitalNumeric,
+	CharSet: charset.AlphaCapitalNumeric,
 	Rand:    rand.New(rand.NewSource(cast.Now().UnixNano())),
-}
-
-// NewVal creates a key using DefaultSettings
-func NewVal() string {
-	return DefaultSettings.Keygen()
 }

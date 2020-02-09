@@ -9,6 +9,8 @@ Repository is hosted at `"ztaylor.me/keygen"`
 
 ## Update History
 
+- v0.0.5 @2020-01-11
+  - update `ztaylor.me/cast`@`v0.0.10`
 - v0.0.4 @2020-01-11
   - update `ztaylor.me/cast`@`v0.0.8`
 - v0.0.3 @2019-12-27
